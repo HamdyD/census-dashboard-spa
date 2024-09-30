@@ -12,3 +12,9 @@ export type ColumnDataT = {
   count: number;
   avg_age: number;
 };
+
+export type DataResponseT = {
+  data: ColumnDataT[];
+  totalPages: number;
+  totalCount: number;
+};
