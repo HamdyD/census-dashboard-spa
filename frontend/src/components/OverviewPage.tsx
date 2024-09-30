@@ -1,5 +1,4 @@
 import {
-  Box,
   Select,
   Spinner,
   Table,
@@ -9,6 +8,9 @@ import {
   Thead,
   Tr,
   Text,
+  Card,
+  CardBody,
+  VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useCensusStore } from "../store/useCensusStore";
@@ -28,10 +30,11 @@ const OverviewPage = () => {
   };
 
   return (
-    <Box padding="4">
+    <VStack padding="4">
       <Select
         placeholder="Select option"
         onChange={(e) => handleColumnChange(e.target.value)}
+        marginBottom="4"
       >
         {columns.map((column) => (
           <option value={column.name} key={column.cid}>
@@ -39,6 +42,15 @@ const OverviewPage = () => {
           </option>
         ))}
       </Select>
+      <Card>
+        <CardBody>
+          <Text>
+            You have <strong>{data.length}</strong> result
+            {data.length > 1 ? "s" : ""} for the column{" "}
+            <strong>{selectedColumn}</strong>
+          </Text>
+        </CardBody>
+      </Card>
       {loading ? (
         <Spinner size="xl" />
       ) : data.length > 0 ? (
@@ -67,7 +79,7 @@ const OverviewPage = () => {
       ) : (
         <Text>No data available</Text>
       )}
-    </Box>
+    </VStack>
   );
 };
 
