@@ -1,0 +1,4 @@
+node_modules
+
+# Ignore database file
+src/database/us-census.db
