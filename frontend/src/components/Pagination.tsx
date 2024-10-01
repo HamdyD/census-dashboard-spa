@@ -73,7 +73,7 @@ const Pagination = ({
           icon={<ChevronLeftIcon />}
           onClick={handlePrevPage}
           isDisabled={page === 1}
-          colorScheme="blue"
+          colorScheme="purple"
         />
         <Text>
           Page {page} of {totalPages}
@@ -83,7 +83,7 @@ const Pagination = ({
           icon={<ChevronRightIcon />}
           onClick={handleNextPage}
           isDisabled={page === totalPages}
-          colorScheme="blue"
+          colorScheme="purple"
         />
       </HStack>
     </Flex>

@@ -17,7 +17,7 @@ const TableSkeleton = ({ limit }: TableSkeletonProps) => {
   return (
     <TableContainer width="100%" borderRadius="xl" boxShadow="sm">
       <Table backgroundColor="white">
-        <Thead backgroundColor="blue.500">
+        <Thead backgroundColor="purple.500">
           <Tr>
             <Th color="white">Value</Th>
             <Th color="white">Count</Th>
