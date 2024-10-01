@@ -24,15 +24,15 @@ const viridisColors = [
 ];
 
 const DoughnutChart = ({ selectedColumn }: DoughnutChartProps) => {
-  const { data } = useCensusStore();
+  const { doughnutChartData } = useCensusStore();
 
   const chartData = {
-    labels: data.map((row) =>
-      row[selectedColumn] !== null ? row[selectedColumn] : "undefined"
-    ),
+    labels: doughnutChartData.map((row) => {
+      return row[selectedColumn] === null ? "undefined" : row[selectedColumn];
+    }),
     datasets: [
       {
-        data: data.map((row) => row.count),
+        data: doughnutChartData.map((row) => row.count),
         backgroundColor: viridisColors,
         hoverOffset: 30,
       },
