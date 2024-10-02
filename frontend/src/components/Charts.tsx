@@ -28,7 +28,11 @@ const DoughnutChart = ({ selectedColumn }: DoughnutChartProps) => {
 
   const chartData = {
     labels: doughnutChartData.map((row) => {
-      return row[selectedColumn] === null ? "undefined" : row[selectedColumn];
+      if (row[selectedColumn] !== undefined) {
+        return row[selectedColumn] === null
+          ? "undefined"
+          : row[selectedColumn].toString();
+      }
     }),
     datasets: [
       {
