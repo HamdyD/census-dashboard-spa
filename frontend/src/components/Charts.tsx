@@ -24,7 +24,8 @@ const viridisColors = [
 ];
 
 const DoughnutChart = ({ selectedColumn }: DoughnutChartProps) => {
-  const { doughnutChartData } = useCensusStore();
+  const { data } = useCensusStore();
+  const doughnutChartData = data.slice(0, 10);
 
   const chartData = {
     labels: doughnutChartData.map((row) => {

@@ -5,7 +5,6 @@ import { ColumnT, ColumnDataT } from "../types/columnType";
 type CensusState = {
   columns: ColumnT[];
   data: ColumnDataT[];
-  doughnutChartData: ColumnDataT[];
   loading: boolean;
   fetchAllColumns: () => Promise<void>;
   fetchData: (column: string, page: number, limit: number) => Promise<void>;
@@ -16,7 +15,6 @@ type CensusState = {
 export const useCensusStore = create<CensusState>((set) => ({
   columns: [],
   data: [],
-  doughnutChartData: [],
   loading: false,
   totalPages: 0,
   totalCount: 0,
@@ -39,7 +37,6 @@ export const useCensusStore = create<CensusState>((set) => ({
         data: response.data,
         totalPages: response.totalPages,
         totalCount: response.totalCount,
-        doughnutChartData: response.doughnutChartData,
       });
     } catch (error) {
       console.error(`Error fetching data for column ${column}:`, error);

@@ -39,61 +39,15 @@ const getData = (req, res) => {
     LIMIT ${rowLimit} OFFSET ${offset};
   `;
 
-  // Query to fetch top 10 values for the doughnut chart
-  const top10Query = `
-    SELECT ${formattedColumnName}, COUNT(*) as count, AVG(age) as avg_age
-    FROM ${table_name}
-    GROUP BY ${formattedColumnName}
-    ORDER BY count DESC
-    LIMIT 10
-  `;
-
   db.all(paginatedQuery, [], (error, paginatedRows) => {
     if (error) {
       res.status(500).json({ error: error.message });
       return;
     }
 
-    db.all(top10Query, [], (error, top10Rows) => {
-      if (error) {
-        res.status(500).json({ error: error.message });
-      }
-
-      // FIXME: I cannot manage to fetch "Other" query.
-      // It consistently returns { count: 0, avg_age: null }
-
-      // const otherValuesQuery = `
-      //   SELECT COUNT(*) as count, AVG(age) as avg_age
-      //   FROM ${table_name}
-      //   WHERE ${formattedColumnName} NOT IN (
-      //     SELECT ${formattedColumnName}
-      //     FROM ${table_name}
-      //     GROUP BY ${formattedColumnName}
-      //     ORDER BY COUNT(*) DESC
-      //     LIMIT 10
-      //   );
-      // `;
-
-      // db.get(otherValuesQuery, [], (error, otherValuesRow) => {
-      //   if (error) {
-      //     return res
-      //       .status(500)
-      //       .json({ error: `Error fetching 'Other' values: ${error.message}` });
-      //   }
-
-      const doughnutChartData = [...top10Rows];
-
-      // if (otherValuesRow && otherValuesRow.count > 0) {
-      //   doughnutChartData.push({
-      //     [formattedColumnName]: "Other",
-      //     count: otherValuesRow.count,
-      //     avg_age: otherValuesRow.avg_age,
-      //   });
-      // }
-
-      // Count all distinct values for the selected column, treating NULL as a distinct value.
-      // This ensures that we capture the total number of entries, including those that are NULL.
-      const totalCountQuery = `
+    // Count all distinct values for the selected column, treating NULL as a distinct value.
+    // This ensures that we capture the total number of entries, including those that are NULL.
+    const totalCountQuery = `
         SELECT COUNT(DISTINCT CASE 
           WHEN ${formattedColumnName} IS NULL THEN 'NULL'
           ELSE ${formattedColumnName}
@@ -101,23 +55,21 @@ const getData = (req, res) => {
         FROM ${table_name};
       `;
 
-      db.get(totalCountQuery, [], (error, totalCountRow) => {
-        if (error) {
-          res
-            .status(500)
-            .json({ error: `Error fetching total count: ${error.message}` });
-          return;
-        }
+    db.get(totalCountQuery, [], (error, totalCountRow) => {
+      if (error) {
+        res
+          .status(500)
+          .json({ error: `Error fetching total count: ${error.message}` });
+        return;
+      }
 
-        const totalCount = totalCountRow?.totalCount ?? 0;
-        const totalPages = Math.ceil(totalCountRow.totalCount / limit);
+      const totalCount = totalCountRow?.totalCount ?? 0;
+      const totalPages = Math.ceil(totalCountRow.totalCount / limit);
 
-        res.status(200).json({
-          data: paginatedRows,
-          totalPages,
-          totalCount,
-          doughnutChartData,
-        });
+      res.status(200).json({
+        data: paginatedRows,
+        totalPages,
+        totalCount,
       });
     });
   });

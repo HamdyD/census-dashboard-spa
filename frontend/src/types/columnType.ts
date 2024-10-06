@@ -17,5 +17,4 @@ export type DataResponseT = {
   data: ColumnDataT[];
   totalPages: number;
   totalCount: number;
-  doughnutChartData: ColumnDataT[];
 };
