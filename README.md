@@ -4,21 +4,28 @@ This project provides a web-based application to visualize census data using a T
 
 ## Table of Contents
 
-- [Features](#features)
-
-- [Requirements](#requirements)
-
-- [Usage](#usage)
-
-  - [Running with Docker](#running-with-docker)
-
-  - [Running Locally](#running-locally)
-
-- [Database Setup](#database-setup)
+- [Census data visualization](#census-data-visualization)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+  - [Requirements](#requirements)
+  - [Usage](#usage)
+    - [Running with Docker](#running-with-docker)
+    - [Running Locally](#running-locally)
+  - [Database Setup](#database-setup)
 
 ## Features
 
 Visualize census data using an interactive paginated Table and a Doughnut charts.
+
+## Technologies Used
+
+This project is built using the following key technologies:
+
+- **Node.js** with **Express**: Backend server and API handling.
+- **Sequelize** with **SQLite**: ORM for managing and querying data in the SQLite database.
+- **React**: Frontend user interface, using component-based architecture.
+- **Vite**: Development server and build tool for faster development.
 
 ## Requirements
 
@@ -39,13 +46,13 @@ To run the application using Docker, follow these steps:
 ```bash
 backend/src/database/us-census.db
 ```
-  
+
 3.  From the root of the project, execute the following command:
 
 ```bash
 docker-compose up
 ```
-    
+
 4.  Access the application in your web browser at `http://localhost:8080`.
 
 ### Running Locally
@@ -58,7 +65,7 @@ If you prefer to run the application without Docker, follow these steps:
 cd backend
 npm install
 ```
-    
+
 2.  Start the backend server:
 
 ```shell
@@ -76,7 +83,7 @@ npm install
 
 ```bash
 npm run dev
-```  
+```
 
 5.  Access the application in your web browser at `http://localhost:5173`.
 
