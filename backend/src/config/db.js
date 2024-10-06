@@ -1,16 +1,20 @@
-const sqlite3 = require("sqlite3").verbose();
+const { Sequelize } = require("sequelize");
 const path = require("path");
 
-const dbPath = path.resolve(__dirname, "../database/us-census.db");
-
-// Connect to the SQLite database
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error("Error opening the database: ", err.message);
-    process.exit(1);
-  } else {
-    console.log("Connected to the SQLite database");
-  }
+const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: path.resolve(__dirname, "../database/us-census.db"),
 });
 
-module.exports = db;
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log(
+      "Connection to the SQLite database has been established successfully."
+    );
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database: ", error);
+  });
+
+module.exports = sequelize;
